@@ -4,8 +4,8 @@ import helpers.FileParser;
 
 import java.io.BufferedReader;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -21,36 +21,12 @@ public class Main {
       String s1 = line.substring(0, length/2);
       String s2 = line.substring(length/2);
 
-      HashMap<Character, Integer> map1 = new HashMap<>();
-      HashMap<Character, Integer> map2 = new HashMap<>();
+      Set<Character> set1 = Arrays.stream(s1.split("")).map(s -> s.charAt(0)).collect(Collectors.toSet());
+      Set<Character> set2 = Arrays.stream(s2.split("")).map(s -> s.charAt(0)).collect(Collectors.toSet());
 
-      Arrays.stream(s1.split("")).map(s -> s.charAt(0)).forEach(c -> {
+      set1.retainAll(set2);
 
-        int count = map1.getOrDefault(c, 0);
-        count++;
-        map1.put(c, count);
-
-      });
-
-      Arrays.stream(s2.split("")).map(s -> s.charAt(0)).forEach(c -> {
-
-        int count = map2.getOrDefault(c, 0);
-        count++;
-        map2.put(c, count);
-
-      });
-
-      for (Map.Entry<Character, Integer> entry : map1.entrySet()) {
-        Character c = entry.getKey();
-        int count1 = entry.getValue();
-        if (!map2.containsKey(c)) {
-          continue;
-        }
-
-        int count2 = map2.get(c);
-
-        int overlap = Math.min(count1, count2);
-
+      for (Character c : set1) {
         int priority = 0;
         if (c >= 65 && c <= 90) {
           //capital letter
@@ -62,8 +38,6 @@ public class Main {
         } else {
           throw new RuntimeException("Invalid letter");
         }
-
-        //priority *= overlap;
 
         answer += priority;
       }
