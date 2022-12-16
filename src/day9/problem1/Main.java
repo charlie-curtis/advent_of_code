@@ -12,12 +12,9 @@ public class Main {
 
     boolean[][] visited = new boolean[1000][1000];
     String line;
-    int yMovement = 0;
-    int xMovement = 0;
 
     int[] headPos = {500, 500};
     int[] tailPos = {500, 500};
-    int xMax = 0, yMax = 0;
     visited[tailPos[0]][tailPos[1]] = true;
     while ((line = br.readLine()) != null) {
       String[] split = line.split(" ");
@@ -75,10 +72,6 @@ public class Main {
         visited[tailPos[0]][tailPos[1]] = true;
         amount--;
       }
-
-      xMax = Math.max(Math.abs(xMovement), xMax);
-      yMax = Math.max(Math.abs(yMovement), yMax);
-
     }
 
     int answer = 0;
@@ -89,7 +82,6 @@ public class Main {
 
     }
 
-    System.out.printf("amount (%d, %d)%n", xMax, yMax);
     System.out.printf("The answer is %d%n", answer);
   }
 
